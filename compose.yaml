@@ -9,3 +9,5 @@ services:
           target: /app/src
           ignore:
             - node_modules/
+        - action: rebuild
+          path: package.json
