@@ -4,8 +4,11 @@
   - Creates a `non-privileged user` named `app` with `UID` `1001`.
   - The `-ms /bin/sh` creates a `home directory` and assigns a `default shell`.
 
-USER app:
+`USER app`:
   - Switches to the `app` user, so any following instructions will run under this user, not as `root`
+
+`COPY --chown=app:app ./src ./src`:
+  - Copies the source code into the `/app/src` directory and ensures it is owned by the `app user and group`, for security
 
 # docker compose up -d
 
@@ -59,4 +62,39 @@ app
 
 (base) ┌──(klx㉿kali)-[~/docker-non-privileged/non-root] (main)
 └─$
+```
+
+# List files
+
+```bash
+(base) ┌──(klx㉿kali)-[~/docker-non-privileged/non-root] (main)
+└─$ docker exec -it non-root-app-1 pwd      
+/app
+
+(base) ┌──(klx㉿kali)-[~/docker-non-privileged/non-root] (main)
+└─$ docker exec -it non-root-app-1 ls -l    
+total 36
+drwxr-xr-x 70 app  app   4096 Mar  3 14:30 node_modules
+-rw-rw-r--  1 root root   139 Mar  3 14:22 package.json
+drwxr-xr-x  2 app  app   4096 Mar  3 14:34 src
+-rw-rw-r--  1 root root 21747 Mar  3 14:21 yarn.lock
+
+(base) ┌──(klx㉿kali)-[~/docker-non-privileged/non-root] (main)
+└─$ docker exec -it non-root-app-1 ls -l src
+total 4
+-rw-rw-r-- 1 app app 312 Mar  3 14:32 index.js
+
+(base) ┌──(klx㉿kali)-[~/docker-non-privileged/non-root] (main)
+└─$ 
+```
+
+# Logs
+
+```bash
+(base) ┌──(klx㉿kali)-[~/docker-non-privileged/non-root] (main)
+└─$ docker logs non-root-app-1              
+Non-root server is running on http://localhost:3000
+
+(base) ┌──(klx㉿kali)-[~/docker-non-privileged/non-root] (main)
+└─$ 
 ```
