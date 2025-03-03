@@ -2,3 +2,10 @@ services:
   app:
     build:
       context: .
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/src
+          ignore:
+            - node_modules/
