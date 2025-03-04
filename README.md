@@ -39,3 +39,4 @@ Gracefully stopping... (press Ctrl+C again to force)
 
 - Support `Hot Reload`
 - Edit `src/index.js` will reload the app, thanks to nodemon
+- Edit `package.json`, `Dockerfile`, `compose.yaml` will rebuild the app, thanks to `docker compose up --watch`
